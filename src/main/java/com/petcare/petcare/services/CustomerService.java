@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.petcare.petcare.dtos.CustomerRequest;
 import com.petcare.petcare.models.Customer;
 import com.petcare.petcare.repositories.interfaces.ICustomerRepository;
 import com.petcare.petcare.services.interfaces.ICustomerService;
@@ -28,6 +29,40 @@ public class CustomerService implements ICustomerService {
     @Override
     public Optional<Customer> findById(Long id) {
         return customerRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Customer> save(CustomerRequest request) {
+        Customer customer = Customer.builder()
+            .name(request.getName())
+            .email(request.getEmail())
+            .phone(request.getPhone())
+            .address(request.getAddress())
+            .build();
+
+        return Optional.of(customerRepository.save(customer));
+    }
+
+    @Override
+    public Optional<Customer> update(Long id, CustomerRequest request) {
+        if(!customerRepository.existsById(id)){
+            return Optional.empty();
+        }
+
+        Customer customer = Customer.builder()
+            .id(id)
+            .name(request.getName())
+            .email(request.getEmail())
+            .phone(request.getPhone())
+            .address(request.getAddress())
+            .build();
+
+        return Optional.of(customerRepository.save(customer));
+    }
+
+    @Override
+    public void delete(Long id) {
+        customerRepository.deleteById(id);
     }
 
 }
