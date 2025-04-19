@@ -1,12 +1,11 @@
 package com.petcare.petcare.repositories.interfaces;
 
-import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.petcare.petcare.models.PetOwner;
 
-public interface IPetOwnerRepository {
-    public Optional<PetOwner> findById(Long id);
-    public Optional<PetOwner> findByEmail(String email);
-    public List<PetOwner> findAll();
+public interface IPetOwnerRepository extends JpaRepository<PetOwner, Long> { 
+    Optional<PetOwner> findByEmail(String email);
 }

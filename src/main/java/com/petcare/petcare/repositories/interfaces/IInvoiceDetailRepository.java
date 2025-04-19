@@ -1,12 +1,11 @@
 package com.petcare.petcare.repositories.interfaces;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.petcare.petcare.models.InvoiceDetail;
 
-public interface IInvoiceDetailRepository {
-    public Optional<InvoiceDetail> findById(Long id);
-    public List<InvoiceDetail> findAll();
-    public List<InvoiceDetail> findByInvoiceId(Long id);
+public interface IInvoiceDetailRepository extends JpaRepository<InvoiceDetail, Long> { 
+    List<InvoiceDetail> findByInvoiceId(Long id);
 }

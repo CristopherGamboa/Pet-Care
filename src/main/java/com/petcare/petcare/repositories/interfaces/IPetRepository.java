@@ -1,13 +1,13 @@
 package com.petcare.petcare.repositories.interfaces;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.petcare.petcare.enums.PetType;
 import com.petcare.petcare.models.Pet;
 
-public interface IPetRepository {
-    public Optional<Pet> findById(Long id);
-    public List<Pet> findAll();
-    public List<Pet> findByOwnerId(Long id);
-    public List<Pet> findByType(String type);
+public interface IPetRepository extends JpaRepository<Pet, Long> { 
+    List<Pet> findByOwnerId(Long id);
+    List<Pet> findByType(PetType type);
 }
