@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.petcare.petcare.dtos.PetRequest;
 import com.petcare.petcare.models.Pet;
 import com.petcare.petcare.services.interfaces.IPetService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/pets")
@@ -48,5 +55,20 @@ public class PetController {
     @GetMapping("/type/{type}")
     public List<Pet> getPetsByType(@PathVariable String type) {
         return petService.findByType(type);
+    }
+
+    @PostMapping
+    public Optional<Pet> savePet(@Valid @RequestBody PetRequest request) {
+        return petService.save(request);
+    }
+
+    @PutMapping("/{id}")
+    public Optional<Pet> updatePet(@PathVariable Long id, @Valid @RequestBody PetRequest request) {
+        return petService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePet(@PathVariable Long id) {
+        petService.delete(id);
     }
 }

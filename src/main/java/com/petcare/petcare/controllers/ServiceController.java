@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.petcare.petcare.dtos.ServiceRequest;
 import com.petcare.petcare.models.Service;
 import com.petcare.petcare.services.interfaces.IServiceService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/services")
@@ -34,5 +41,20 @@ public class ServiceController {
     @GetMapping("/{id}")
     public Optional<Service> getServiceById(@PathVariable Long id) {
         return serviceService.findById(id);
+    }
+
+    @PostMapping
+    public Optional<Service> saveService(@Valid @RequestBody ServiceRequest request) {
+        return serviceService.save(request);
+    }
+
+    @PutMapping("/{id}")
+    public Optional<Service> updateService(@PathVariable Long id, @Valid @RequestBody ServiceRequest request) {
+        return serviceService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteService(@PathVariable Long id) {
+        serviceService.delete(id);
     }
 }
