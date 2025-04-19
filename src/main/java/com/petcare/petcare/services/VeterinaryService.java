@@ -11,6 +11,8 @@ import com.petcare.petcare.models.Veterinary;
 import com.petcare.petcare.repositories.interfaces.IVeterinaryRepository;
 import com.petcare.petcare.services.interfaces.IVeterinaryService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class VeterinaryService implements IVeterinaryService {
     
@@ -46,7 +48,7 @@ public class VeterinaryService implements IVeterinaryService {
     @Override
     public Optional<Veterinary> update(Long id, VeterinaryRequest request) {
         if (!veterinaryRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Veterinary with id " + id + " not found.");
         }
 
         Veterinary veterinary = Veterinary.builder()
@@ -62,6 +64,10 @@ public class VeterinaryService implements IVeterinaryService {
 
     @Override
     public void delete(Long id) {
+        if (!veterinaryRepository.existsById(id)) {
+            throw new EntityNotFoundException("Veterinary with id " + id + " not found.");
+        }
+        
         veterinaryRepository.deleteById(id);
     }
 }

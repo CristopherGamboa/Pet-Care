@@ -10,6 +10,8 @@ import com.petcare.petcare.models.Service;
 import com.petcare.petcare.repositories.interfaces.IServiceRepository;
 import com.petcare.petcare.services.interfaces.IServiceService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @org.springframework.stereotype.Service
 public class ServiceService implements IServiceService {
 
@@ -44,7 +46,7 @@ public class ServiceService implements IServiceService {
     @Override
     public Optional<Service> update(Long id, ServiceRequest request) {
         if (!serviceRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Service with id " + id + " not found.");
         }
 
         Service service = Service.builder()
@@ -60,6 +62,10 @@ public class ServiceService implements IServiceService {
 
     @Override
     public void delete(Long id) {
+        if (!serviceRepository.existsById(id)) {
+            throw new EntityNotFoundException("Service with id " + id + " not found.");
+        }
+        
         serviceRepository.deleteById(id);
     } 
 }

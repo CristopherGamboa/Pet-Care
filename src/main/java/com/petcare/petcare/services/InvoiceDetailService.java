@@ -68,7 +68,7 @@ public class InvoiceDetailService implements IInvoiceDetailService {
     @Override
     public Optional<InvoiceDetail> update(Long id, InvoiceDetailRequest request) {
         if (!invoiceDetailRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Invoice detail with id " + id + " not found.");
         }
 
         Invoice invoice = invoiceRepository.findById(request.getInvoiceId())
@@ -89,6 +89,10 @@ public class InvoiceDetailService implements IInvoiceDetailService {
 
     @Override
     public void delete(Long id) {
+        if (!invoiceDetailRepository.existsById(id)) {
+            throw new EntityNotFoundException("Invoice detail with id " + id + " not found.");
+        }
+        
         invoiceDetailRepository.deleteById(id);
     }
 }

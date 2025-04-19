@@ -66,7 +66,7 @@ public class InvoiceService implements IInvoiceService {
     @Override
     public Optional<Invoice> update(Long id, InvoiceRequest request) {
         if (!invoiceRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Invoice with id " + id + " not found.");
         }
 
         Pet pet = petService.findById(request.getPetId())
@@ -89,6 +89,10 @@ public class InvoiceService implements IInvoiceService {
 
     @Override
     public void delete(Long id) {
+        if (!invoiceRepository.existsById(id)) {
+            throw new EntityNotFoundException("Invoice with id " + id + " not found.");
+        }
+        
         invoiceRepository.deleteById(id);
     }
 }

@@ -11,6 +11,8 @@ import com.petcare.petcare.models.PetOwner;
 import com.petcare.petcare.repositories.interfaces.IPetOwnerRepository;
 import com.petcare.petcare.services.interfaces.IPetOwnerService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class PetOwnerService implements IPetOwnerService {
 
@@ -51,7 +53,7 @@ public class PetOwnerService implements IPetOwnerService {
     @Override
     public Optional<PetOwner> update(Long id, PetOwnerRequest request) {
         if (!petOwnerRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Pet owner with id " + id + " not found.");
         }
 
         PetOwner petOwner = PetOwner.builder()
@@ -67,6 +69,10 @@ public class PetOwnerService implements IPetOwnerService {
 
     @Override
     public void delete(Long id) {
+        if (!petOwnerRepository.existsById(id)) {
+            throw new EntityNotFoundException("Pet owner with id " + id + " not found.");
+        }
+        
         petOwnerRepository.deleteById(id);
     }
 }

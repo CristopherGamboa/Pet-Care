@@ -66,7 +66,7 @@ public class PetService implements IPetService {
     @Override
     public Optional<Pet> update(Long id, PetRequest request) {
         if (!petRepository.existsById(id)) {
-            return Optional.empty();
+            throw new EntityNotFoundException("Pet with id " + id + " not found.");
         }
 
         PetOwner petOwner = petOwnerService.findById(request.getOwnerId())
@@ -84,6 +84,10 @@ public class PetService implements IPetService {
 
     @Override
     public void delete(Long id) {
+        if (!petRepository.existsById(id)) {
+            throw new EntityNotFoundException("Pet with id " + id + " not found.");
+        }
+        
         petRepository.deleteById(id);
     }
 }

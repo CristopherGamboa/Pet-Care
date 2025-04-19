@@ -11,6 +11,8 @@ import com.petcare.petcare.models.Customer;
 import com.petcare.petcare.repositories.interfaces.ICustomerRepository;
 import com.petcare.petcare.services.interfaces.ICustomerService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class CustomerService implements ICustomerService {
 
@@ -46,7 +48,7 @@ public class CustomerService implements ICustomerService {
     @Override
     public Optional<Customer> update(Long id, CustomerRequest request) {
         if(!customerRepository.existsById(id)){
-            return Optional.empty();
+            throw new EntityNotFoundException("Customer with id " + id + " not found.");
         }
 
         Customer customer = Customer.builder()
@@ -62,6 +64,10 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void delete(Long id) {
+        if(!customerRepository.existsById(id)){
+            throw new EntityNotFoundException("Customer with id " + id + " not found.");
+        }
+        
         customerRepository.deleteById(id);
     }
 
