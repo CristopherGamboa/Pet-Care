@@ -1,0 +1,4 @@
+com\petcare\petcare\repositories\CustomerRepositoryTest.class
+com\petcare\petcare\controllers\CustomerControllerTest.class
+com\petcare\petcare\PetcareApplicationTests.class
+com\petcare\petcare\services\CustomerServiceTest.class
