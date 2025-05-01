@@ -2,6 +2,8 @@ package com.petcare.petcare.models;
 
 import java.util.Date;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.petcare.petcare.enums.InvoiceStatus;
 
 import jakarta.persistence.Entity;
@@ -27,7 +29,7 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "invoice")
-public class Invoice {
+public class Invoice extends RepresentationModel<Invoice> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,5 +1,7 @@
 package com.petcare.petcare.models;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +20,7 @@ import lombok.Setter;
 @Builder
 @Entity
 @Table(name = "pet_owner")
-public class PetOwner {
+public class PetOwner extends RepresentationModel<PetOwner> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
