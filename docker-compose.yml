@@ -1,0 +1,12 @@
+services:
+  petcommunity:
+    image: petcare
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - spring.datasource.url=jdbc:oracle:thin:@azm52dpu5uuipveu_tp?TNS_ADMIN=/app/oracle_wallet
+      - spring.datasource.username=ADMIN
+      - spring.datasource.password=Oracle.Cloud123
