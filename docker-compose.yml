@@ -1,5 +1,5 @@
 services:
-  petcommunity:
+  petcare:
     image: petcare
     build:
       context: .
